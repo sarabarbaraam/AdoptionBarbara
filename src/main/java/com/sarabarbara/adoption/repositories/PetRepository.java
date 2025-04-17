@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -55,16 +56,6 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
     @NotNull Optional<Pet> findById(@NotNull Long id);
 
     /**
-     * Find by the breed of the pets
-     *
-     * @param breed the breed of the pets
-     *
-     * @return the pets of that breed
-     */
-
-    @NotNull Optional<Pet> findByBreed(@NotNull String breed);
-
-    /**
      * Searches a pet by an only or many parameters
      *
      * @param name             the name of the pet
@@ -104,5 +95,16 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
 
 
     @NotNull Optional<Pet> findByNameAndOwner(String petName, Owner owner);
+
+    /**
+     * Filters the 20 youngest pets
+     *
+     * @param pageable tha pageable
+     *
+     * @return the 20 youngest pets
+     */
+
+    @Query("SELECT p FROM Pet p ORDER BY p.birthDate DESC")
+    List<Pet> findTopYoungestPets(Pageable pageable);
 
 }

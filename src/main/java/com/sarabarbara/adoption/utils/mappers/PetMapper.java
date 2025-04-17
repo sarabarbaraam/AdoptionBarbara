@@ -1,9 +1,6 @@
 package com.sarabarbara.adoption.utils.mappers;
 
-import com.sarabarbara.adoption.dto.pet.PetCreateDTO;
-import com.sarabarbara.adoption.dto.pet.PetDTO;
-import com.sarabarbara.adoption.dto.pet.PetSearchDTO;
-import com.sarabarbara.adoption.dto.pet.PetUpdateDTO;
+import com.sarabarbara.adoption.dto.pet.*;
 import com.sarabarbara.adoption.models.Owner;
 import com.sarabarbara.adoption.models.Pet;
 import com.sarabarbara.adoption.sheets.PetSheet;
@@ -148,6 +145,16 @@ public class PetMapper {
                 .owner(updatePet.getOwner())
                 .photoUrl(updatePet.getPhotoUrl())
                 .build();
+    }
+
+    public static List<YoungestPetDTO> toYoungestPetDTOMapper(@NotNull List<Pet> pets) {
+
+        return pets.stream()
+                .map(youngestPets -> YoungestPetDTO.builder()
+                        .name(youngestPets.getName())
+                        .birthDate(youngestPets.getBirthDate())
+                        .build())
+                .toList();
     }
 
 }

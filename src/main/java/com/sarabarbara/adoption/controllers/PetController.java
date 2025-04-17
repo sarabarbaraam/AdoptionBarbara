@@ -1,9 +1,6 @@
 package com.sarabarbara.adoption.controllers;
 
-import com.sarabarbara.adoption.dto.pet.PetCreateDTO;
-import com.sarabarbara.adoption.dto.pet.PetDTO;
-import com.sarabarbara.adoption.dto.pet.PetSearchDTO;
-import com.sarabarbara.adoption.dto.pet.PetUpdateDTO;
+import com.sarabarbara.adoption.dto.pet.*;
 import com.sarabarbara.adoption.models.Pet;
 import com.sarabarbara.adoption.responses.SearchResponse;
 import com.sarabarbara.adoption.responses.pet.CreatePetResponse;
@@ -291,6 +288,33 @@ public class PetController {
             logger.error("Can't delete pet: Some internal error occurred. {}", e.getMessage());
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body(e.getMessage());
+        }
+    }
+
+    /**
+     * The Youngest Pets Controller
+     *
+     * @param limit the number limit (the x youngest pets)
+     *
+     * @return the x youngest pets
+     */
+
+    @GetMapping("/pets/youngest")
+    public ResponseEntity<List<YoungestPetDTO>> youngestPets(@RequestParam(defaultValue = "20") int limit) {
+
+        try {
+
+            logger.info("Searching the {} youngest pets", limit);
+
+            List<Pet> youngestPets = petService.findYoungestPets(limit);
+            List<YoungestPetDTO> youngestPetsDTOs = toYoungestPetDTOMapper(youngestPets);
+
+            return ResponseEntity.status(HttpStatus.OK).body(youngestPetsDTOs);
+
+        } catch (Exception e) {
+
+            logger.error("Error searching youngest pets: {}", e.getMessage());
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
 

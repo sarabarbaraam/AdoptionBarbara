@@ -223,6 +223,20 @@ public class PetService {
                 petToDelete.getIdPet(), phoneNumber);
     }
 
+    /**
+     * Method to find the x youngest pets
+     *
+     * @param limit the number limit o pets
+     *
+     * @return the x younger pets
+     */
+
+    public List<Pet> findYoungestPets(int limit) {
+
+        return petRepository.findTopYoungestPets(PageRequest.of(0, limit));
+
+    }
+
     // Complementary methods
 
     /**
