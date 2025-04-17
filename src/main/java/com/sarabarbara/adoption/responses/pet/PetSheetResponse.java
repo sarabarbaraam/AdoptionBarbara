@@ -27,7 +27,7 @@ public class PetSheetResponse {
     private boolean success;
 
     /**
-     * The clientSheet
+     * The petSheet
      */
 
     private PetSheet petSheet;

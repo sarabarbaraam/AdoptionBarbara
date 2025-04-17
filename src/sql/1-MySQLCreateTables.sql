@@ -5,7 +5,7 @@ CREATE TABLE Owner (
     id_owner BIGINT NOT NULL UNIQUE AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     address VARCHAR(200) NOT NULL,
-    phone_number VARCHAR(20) NOT NULL,
+    phone_number VARCHAR(20) NOT NULL UNIQUE,
     CONSTRAINT OwnerPK PRIMARY KEY (id_owner)
 ) ENGINE = InnoDB;
 
@@ -18,7 +18,7 @@ CREATE TABLE Pet (
     has_chip BOOLEAN NOT NULL,
     is_adopted BOOLEAN NOT NULL,
     id_owner BIGINT,
-    photo_url VARCHAR(255) NOT NULL,
+    photo_url VARCHAR(255) NOT NULL UNIQUE,
     CONSTRAINT PetPK PRIMARY KEY (id_pet),
     CONSTRAINT PetOwnerFK FOREIGN KEY (id_owner)
         REFERENCES Owner (id_owner)

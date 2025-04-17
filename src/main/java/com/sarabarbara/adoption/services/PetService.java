@@ -172,7 +172,7 @@ public class PetService {
         // ignores the null fields
         modelMapper.getConfiguration().setSkipNullEnabled(true);
 
-        /* copies the values of the Client object (newInfo, any non-null field)
+        /* copies the values of the Pet object (newInfo, any non-null field)
         to the existingClient object. */
 
         modelMapper.map(newInfo, optionalPet);
@@ -228,14 +228,14 @@ public class PetService {
     /**
      * Validates if the photoUrl is taken
      *
-     * @param photoUrl the company
+     * @param photoUrl the photoUrl
      */
 
     private void photoUrlValidator(String photoUrl) {
 
-        Optional<Pet> optionalCompany = petRepository.findByPhotoUrl(photoUrl);
+        Optional<Pet> optionalPhotoUrl = petRepository.findByPhotoUrl(photoUrl);
 
-        if (optionalCompany.isPresent()) {
+        if (optionalPhotoUrl.isPresent()) {
 
             logger.error("The photoUrl {} is already taken.", photoUrl);
             throw new PetValidateException("The photoUrl " + photoUrl + " is already taken.");

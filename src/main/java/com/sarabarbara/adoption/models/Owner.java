@@ -68,7 +68,6 @@ public class Owner implements Serializable {
      * The pets
      */
 
-    @NonNull
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY)
     @JsonManagedReference
     private List<Pet> pets;

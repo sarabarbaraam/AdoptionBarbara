@@ -67,7 +67,7 @@ public class PetMapper {
      *
      * @param petList the pet list
      *
-     * @return the ClientDTO
+     * @return the PetDTO
      */
 
     public static List<PetDTO> toPetDTOListMapper(@NotNull List<Pet> petList) {
