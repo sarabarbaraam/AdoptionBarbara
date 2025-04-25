@@ -98,7 +98,7 @@ public class PetService {
      * @return the pet searched
      */
 
-    public List<Pet> searchPet(String name, LocalDate birthDate, String breed, Float weight, Boolean chip,
+    public List<Pet> searchPet(Long petId, String name, LocalDate birthDate, String breed, Float weight, Boolean chip,
                                Boolean adopted, String phoneNumberOwner, String photoUrl, int page, int size) {
 
         logger.info("Searching pet...");
@@ -109,7 +109,7 @@ public class PetService {
 
         PageRequest pageRequest = PageRequest.of(page - 1, size);
 
-        Page<Pet> searchedPets = petRepository.searchPets(name, birthDate, breed, weight, chip, adopted,
+        Page<Pet> searchedPets = petRepository.searchPets(petId, name, birthDate, breed, weight, chip, adopted,
                 phoneNumberOwner, photoUrl, pageRequest);
 
         logger.info("Pet found: {}", searchedPets);

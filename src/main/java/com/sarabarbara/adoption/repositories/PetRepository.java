@@ -72,8 +72,9 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
      */
 
     @Query("SELECT p FROM Pet p " +
-            "LEFT JOIN p.owner o " +  // LEFT JOIN para que las mascotas sin dueño también se incluyan si es necesario
+            "LEFT JOIN p.owner o " +
             "WHERE " +
+            "(:petId IS NULL OR p.id = :petId) AND " +
             "(:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) AND " +
             "(:birthDate IS NULL OR FUNCTION('DATE', p.birthDate) = :birthDate) AND " +
             "(:breed IS NULL OR LOWER(p.breed) LIKE LOWER(CONCAT('%', :breed, '%'))) AND " +
@@ -82,8 +83,9 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
             "(:isAdopted IS NULL OR p.isAdopted = :isAdopted) AND " +
             "(:phoneNumberOwner IS NULL OR :phoneNumberOwner = '' OR LOWER(o.phoneNumber) LIKE LOWER(CONCAT('%', " +
             ":phoneNumberOwner, '%'))) AND " +
-            "(:photoUrl IS NULL OR LOWER(p.photoUrl) LIKE LOWER(CONCAT('%', :photoUrl, '%'))) ")
-    Page<Pet> searchPets(@Param("name") String name,
+            "(:photoUrl IS NULL OR LOWER(p.photoUrl) LIKE LOWER(CONCAT('%', :photoUrl, '%')))")
+    Page<Pet> searchPets(@Param("petId") Long petId,
+                         @Param("name") String name,
                          @Param("birthDate") LocalDate birthDate,
                          @Param("breed") String breed,
                          @Param("weight") Float weight,

@@ -143,7 +143,8 @@ public class PetController {
      */
 
     @GetMapping("/search")
-    public ResponseEntity<SearchResponse<PetSearchDTO>> searchPet(@RequestParam(required = false) String name,
+    public ResponseEntity<SearchResponse<PetSearchDTO>> searchPet(@RequestParam(required = false) Long petId,
+                                                                  @RequestParam(required = false) String name,
                                                                   @RequestParam(required = false) @DateTimeFormat(pattern = "dd/MM/yyyy") LocalDate birthDate,
                                                                   @RequestParam(required = false) String breed,
                                                                   @RequestParam(required = false) Float weight,
@@ -159,7 +160,7 @@ public class PetController {
 
             logger.info("Searching pet started");
 
-            List<Pet> searchedPet = petService.searchPet(name, birthDate, breed, weight, chip, adopted,
+            List<Pet> searchedPet = petService.searchPet(petId, name, birthDate, breed, weight, chip, adopted,
                     phoneNumberOwner, photoUrl, page, size);
 
             if (searchedPet.isEmpty()) {
